@@ -704,7 +704,7 @@ export default function GeojsonEdit() {
                         <div className="h-64 w-full overflow-hidden rounded-md border border-gray-200 dark:border-gray-700">
                             <MapContainer center={mapBounds.center} zoom={mapBounds.zoom} style={{ height: '100%', width: '100%' }}>
                                 <TileLayer
-                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                                    attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
                                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 />
                                 <GeoJSON data={normalizedGeojson} />

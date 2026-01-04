@@ -9,6 +9,12 @@ Sistem manajemen laporan berbasis GIS (Geographic Information System) yang diban
 - Upload limit GeoJSON (100MB): `UPLOAD_LIMIT_GUIDE.md`
 - Konverter ArcGIS `.style` (simbolisasi): `ARCGIS_STYLE_CONVERSION.md` dan `scripts/README.md`
 
+cp docker/env.example docker/.env then edit secrets (POSTGRES_* passwords, APP_KEY blank for now, APP_URL/APP_PORT).
+docker compose build.
+docker compose up -d.
+docker compose exec app php artisan key:generate --ansi then docker compose exec app php artisan migrate --force and php artisan storage:link.
+If using the bundled dump: seed.dump" after placing the dump inside the container or binding it.
+
 ## Fitur Utama
 
 - ✅ CRUD Owner

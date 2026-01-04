@@ -1,10 +1,7 @@
 import BaseLayers from '@/components/BaseLayer';
 import SidebarFilter from '@/components/SidebarFilter';
-import '@geoman-io/leaflet-geoman-free';
-import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { Feature, FeatureCollection } from 'geojson';
 import L, { Map as LeafletMap } from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 // Tree-shakeable icon imports for better bundle size
 import { FaMapMarkedAlt } from 'react-icons/fa';

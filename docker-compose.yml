@@ -1,0 +1,86 @@
+services:
+  app:
+    build:
+      context: .
+      target: app
+    image: gis-app:latest
+    env_file:
+      - ./docker/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./docker/.env:/var/www/html/.env
+      - storage:/var/www/html/storage
+      - cache:/var/www/html/bootstrap/cache
+    restart: unless-stopped
+
+  queue:
+    image: gis-app:latest
+    env_file:
+      - ./docker/.env
+    command: php artisan queue:work --tries=3 --timeout=90
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./docker/.env:/var/www/html/.env
+      - storage:/var/www/html/storage
+      - cache:/var/www/html/bootstrap/cache
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      target: nginx
+    image: gis-web:latest
+    env_file:
+      - ./docker/.env
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST:-prpbintan.dev-ads.id}
+      LETSENCRYPT_HOST: ${VIRTUAL_HOST:-prpbintan.dev-ads.id}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL:-admin@example.com}
+      VIRTUAL_PORT: 80
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      app:
+        condition: service_started
+    volumes:
+      - storage:/var/www/html/storage
+      - cache:/var/www/html/bootstrap/cache
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy_default
+
+  db:
+    image: postgres:17
+    env_file:
+      - ./docker/.env
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gis_app} -d ${POSTGRES_DB:-gis_file}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Optional Redis (uncomment to enable Redis cache/queue)
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   restart: unless-stopped
+
+volumes:
+  postgres_data:
+  storage:
+  cache:
+
+networks:
+  proxy_default:
+    external: true

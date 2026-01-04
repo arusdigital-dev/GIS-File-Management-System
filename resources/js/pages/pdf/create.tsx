@@ -138,7 +138,7 @@ export default function Create({ geojsonSelected, regions, owners, user_id }: Cr
                                 <div className="mb-6 h-64 w-full rounded border">
                                     <MapContainer center={center} zoom={zoom} style={{ height: '100%', width: '100%' }}>
                                         <TileLayer
-                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                                            attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
                                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                                         />
                                         <GeoJSON data={normalizedGeojson} />
