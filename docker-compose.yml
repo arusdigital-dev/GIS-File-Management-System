@@ -14,6 +14,8 @@ services:
       - storage:/var/www/html/storage
       - cache:/var/www/html/bootstrap/cache
     restart: unless-stopped
+    cpus: "2.0"
+    mem_limit: 8g
 
   queue:
     image: gis-app:latest
@@ -28,6 +30,8 @@ services:
       - storage:/var/www/html/storage
       - cache:/var/www/html/bootstrap/cache
     restart: unless-stopped
+    cpus: "2.0"
+    mem_limit: 8g
 
   web:
     build:
@@ -50,6 +54,8 @@ services:
       - storage:/var/www/html/storage
       - cache:/var/www/html/bootstrap/cache
     restart: unless-stopped
+    cpus: "2.0"
+    mem_limit: 8g
     networks:
       - default
       - proxy_default
@@ -68,6 +74,8 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    cpus: "2.0"
+    mem_limit: 8g
 
   # Optional Redis (uncomment to enable Redis cache/queue)
   # redis:

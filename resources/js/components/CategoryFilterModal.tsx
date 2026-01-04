@@ -27,8 +27,6 @@ interface CategoryFilterModalProps {
 }
 
 const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({ isOpen, onClose, categories, selectedFilters, onFilterChange }) => {
-    if (!isOpen) return null;
-
     // 1) Unique list untuk setiap dropdown berdasar selectedFilters
     const orde0Options = useMemo(() => Array.from(new Set(categories.map((c) => c.orde0).filter(Boolean))), [categories]);
     const orde1Options = useMemo(
@@ -60,7 +58,12 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({ isOpen, onClo
             Array.from(
                 new Set(
                     categories
-                        .filter((c) => c.orde0 === selectedFilters.orde0 && c.orde1 === selectedFilters.orde1 && c.orde2 === selectedFilters.orde2)
+                        .filter(
+                            (c) =>
+                                c.orde0 === selectedFilters.orde0 &&
+                                c.orde1 === selectedFilters.orde1 &&
+                                c.orde2 === selectedFilters.orde2,
+                        )
                         .map((c) => c.orde3)
                         .filter(Boolean),
                 ),
@@ -85,6 +88,8 @@ const CategoryFilterModal: React.FC<CategoryFilterModalProps> = ({ isOpen, onClo
             ),
         [categories, selectedFilters.orde0, selectedFilters.orde1, selectedFilters.orde2, selectedFilters.orde3],
     );
+
+    if (!isOpen) return null;
 
     // 2) Handler perubahan dengan reset dropdown di bawahnya
     const handleChange = (orde: OrdeKey, value: string) => {
