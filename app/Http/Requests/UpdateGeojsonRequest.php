@@ -7,9 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateGeojsonRequest extends FormRequest
 {
     /**
-     * Maximum total upload size in bytes (100MB)
+     * Maximum total upload size in bytes (250MB)
      */
-    const MAX_TOTAL_SIZE = 100 * 1024 * 1024; // 100MB in bytes
+    const MAX_TOTAL_SIZE = 250 * 1024 * 1024; // 250MB in bytes
 
     /**
      * Determine if the user is authorized to make this request.

@@ -31,6 +31,7 @@ RUN npm run build
 FROM base AS app
 WORKDIR /var/www/html
 COPY . .
+COPY docker/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 COPY --from=vendor /var/www/html/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build
 
